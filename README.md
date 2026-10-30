@@ -1,12 +1,32 @@
-# CarryBee operations analysis - Phase 1
+# CarryBee operations analysis - assessment review
 
 Reproducible Python 3.13 / SQLite implementation of Q1-Q7 from the supplied
 Data Analyst Technical Assessment. It downloads eight CSVs, validates and imports
 them, executes seven standalone SQL files, independently compares their results
 with pandas/Python, and exports nine CSVs plus consolidated report-ready tables.
 
-Scope: SQL and verification only. Strategy, Streamlit/Plotly dashboard,
-presentation and final PDF are deferred until independent review.
+Phase 1 remains intact. Phase 2 adds reproducible Q8-Q10 strategy and a three-section Streamlit/Plotly dashboard. An eight-slide management presentation and a regenerable assessment PDF are complete for review. The PDF remains DRAFT - NOT FOR SUBMISSION pending a verified public dashboard URL.
+
+## Phase 2 quick start
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m streamlit run app.py
+```
+
+The committed `dashboard_data/` snapshot supports cloud startup without raw CSVs or SQLite. Agent summaries are anonymised. See [PHASE2_HANDOFF.md](PHASE2_HANDOFF.md) for the recommended BDT 65,400 plan, four-week performance, ROI and sensitivities; [DEPLOYMENT.md](DEPLOYMENT.md) for cloud setup and actual browser screenshot commands.
+
+To reproduce Phase 2 locally with the original data:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.scenario_analysis
+.\.venv\Scripts\python.exe -m src.prepare_dashboard_data
+.\.venv\Scripts\python.exe -m pytest -q --junitxml=outputs\phase2-pytest-results.xml
+```
+
+The full suite passes 79 tests. The original 49 Phase 1 tests are retained; source SQL and nine Phase 1 result CSVs have unchanged hashes. New modules are `scenario_analysis.py`, `prepare_dashboard_data.py` and `dashboard_data.py`; browser and packaging scripts are under `scripts/`. Strategic outputs are in `outputs/strategic/`, real screenshots in `outputs/screenshots/`, and shareable ZIPs in `outputs/review/`.
+
+The following sections retain the Phase 1 setup and reference definitions.
 
 ## Windows setup and run
 
@@ -58,7 +78,7 @@ reference totals fail validation and require investigation.
 
 ```text
 CarryBee-Analytics/
-|-- app.py                         # Phase 2 placeholder
+|-- app.py                         # Streamlit operations dashboard
 |-- data/
 |   |-- raw/                       # Eight CSVs and source_manifest.json, ignored
 |   `-- processed/carrybee.sqlite3  # Generated, ignored
@@ -149,7 +169,7 @@ save it under `data\raw\` with the exact filename. Rerun the downloader without
 
 ## Verification
 
-The full original-data run passes **49 tests, 0 failures, 0 skips**. Tests cover
+The Phase 1 milestone passed **49 tests, 0 failures, 0 skips**; the complete assessment suite passes **86 tests**. Tests cover
 join uniqueness and foreign keys, attempt/outcome matching and attribution,
 period boundaries, joining/departure eligibility, hold classification and ties,
 distinct held-order cohorts, strict tenure/return/utilisation thresholds,
@@ -163,28 +183,6 @@ does not establish assessment validation. Expected values live only in validatio
 assertions/tests, never SQL outputs. See [REVIEW_HANDOFF.md](REVIEW_HANDOFF.md)
 for numerical findings and review priorities.
 
-## Git and private GitHub publishing
+## Local Git and manual deployment
 
-The local repository uses branch `main`. Employer raw data, databases, generated
-results, secrets, virtual environments and temporary files are ignored. Only
-source, tests, documentation and directory markers are committed.
-
-GitHub CLI was not available on PATH or in the checked standard installation
-locations, so authentication could not be established and no remote repository
-was created. The exact remaining commands are:
-
-```powershell
-# Install only if GitHub CLI is not already available:
-winget install --id GitHub.cli --exact --source winget
-# Open a new PowerShell window after installation, then:
-Set-Location 'C:\Users\User\OneDrive\Desktop\CarryBee-Analytics'
-gh auth login --hostname github.com --git-protocol https --web
-gh auth status --hostname github.com
-gh api user --jq .login
-# Confirm the displayed account is JaberAhmad555 before creating the repository.
-gh repo create JaberAhmad555/carrybee-operations-analysis --private --source . --remote origin --push
-gh repo view JaberAhmad555/carrybee-operations-analysis --json url,visibility
-```
-
-If that repository already exists, inspect it before attaching a remote; do not
-overwrite it or force-push. No fabricated commits or contribution dates are used.
+No remote publication or account troubleshooting is required for local work. The owner will publish through GitHub Desktop. See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for manual Streamlit deployment and [TECHNICAL_HANDOFF.md](TECHNICAL_HANDOFF.md) for final artifacts and reproducible verification. Do not publish the private review ZIP or raw source data.

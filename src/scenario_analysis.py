@@ -419,6 +419,12 @@ def write_report(model, recommended, comparison, weekly, tables, info):
     baseline = weekly.query("scenario == 'Baseline - no intervention'")
     baseline_summary = comparison.query("scenario == 'Baseline - no intervention'").iloc[0]
     names = model.hubs.set_index("hub_id").hub_name.to_dict()
+    eight = json.loads(comparison.loc[comparison.scenario.eq("Eight fixed hires"), "plan"].iloc[0])["hires"]
+    peak_need = model.forecast.groupby("hub_id").required_agents.max()
+    decisions = [{"Hub": names[h], "Current": int(model.workforce[i]),
+                  "Peak baseline need": int(peak_need[h]), "Eight-hire allocation": eight[h],
+                  "Eight-hire cost BDT": eight[h] * (5000 + 28 * 650),
+                  "Recommended hires": recommended.hires[i]} for i, h in enumerate(HUB_IDS)]
     allocation = []
     for hub, hires in zip(HUB_IDS, recommended.hires):
         moves = [f"{n} from {names[s]}" for s, t, n in recommended.transfers if t == hub]
@@ -434,6 +440,13 @@ def write_report(model, recommended, comparison, weekly, tables, info):
                 "The eight-hire proposal is allocated by sequential marginal reduction in the 85% planning queue. "
                 "The employer supplied no hub split. Selective hires cover each hub's maximum four-week baseline requirement. "
                 "Both fixed and variable contracts are costed; variable pay has an estimated allowance plus a maximum standard-workload reserve.",
+                markdown_table(pd.DataFrame(decisions)),
+                "Greenfield's two-agent baseline gap is covered by Lakeview transfers; its three hires in the eight-hire comparison "
+                "reflect the first-week learning penalty. Hillcrest needs two experienced-equivalent agents throughout the forecast, "
+                "so hire two fixed agents and monitor their initial 60% productivity. Riverside has a two-agent peak baseline gap "
+                "but 563 of its 874 Week 2 holds are agent-side; fund its programme and manage residual target pressure. "
+                "Lakeview, Brookside and Westwood have no baseline hiring gap. Eight fixed hires cost BDT 185,600, "
+                "which exceeds the BDT 70,000 budget by BDT 115,600.",
                 markdown_table(comparison[["scenario", "hires", "transfers", "programmes", "budget_reserved_bdt", "budget_feasible",
                                            "planning_backlog_attempt_days", "end_planning_backlog", "direct_hold_cost_savings_bdt"]]),
                 f"The fixed-pay search evaluated {info['search_28']['feasible_plans_evaluated']:,} feasible plans across all six hubs, "
