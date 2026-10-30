@@ -1,0 +1,73 @@
+hub_id,week,hold_reason,hold_events,agent_side
+H01,1,Address Incomplete,29,False
+H01,1,Agent Time Shortage,13,True
+H01,1,Customer Rescheduled,39,False
+H01,1,Customer Unreachable,56,False
+H01,1,Late Dispatch,14,True
+H01,1,Not Attempted,8,True
+H01,2,Address Incomplete,28,False
+H01,2,Agent Time Shortage,13,True
+H01,2,Customer Rescheduled,35,False
+H01,2,Customer Unreachable,73,False
+H01,2,Late Dispatch,8,True
+H01,2,Not Attempted,11,True
+H02,1,Address Incomplete,20,False
+H02,1,Agent Time Shortage,4,True
+H02,1,Customer Rescheduled,36,False
+H02,1,Customer Unreachable,41,False
+H02,1,Late Dispatch,10,True
+H02,1,Not Attempted,10,True
+H02,2,Address Incomplete,22,False
+H02,2,Agent Time Shortage,10,True
+H02,2,Customer Rescheduled,25,False
+H02,2,Customer Unreachable,50,False
+H02,2,Late Dispatch,7,True
+H02,2,Not Attempted,9,True
+H03,1,Address Incomplete,42,False
+H03,1,Agent Time Shortage,83,True
+H03,1,Customer Rescheduled,62,False
+H03,1,Customer Unreachable,117,False
+H03,1,Late Dispatch,220,True
+H03,1,Not Attempted,103,True
+H03,2,Address Incomplete,63,False
+H03,2,Agent Time Shortage,119,True
+H03,2,Customer Rescheduled,92,False
+H03,2,Customer Unreachable,156,False
+H03,2,Late Dispatch,312,True
+H03,2,Not Attempted,132,True
+H04,1,Address Incomplete,23,False
+H04,1,Agent Time Shortage,9,True
+H04,1,Customer Rescheduled,43,False
+H04,1,Customer Unreachable,62,False
+H04,1,Late Dispatch,11,True
+H04,1,Not Attempted,13,True
+H04,2,Address Incomplete,26,False
+H04,2,Agent Time Shortage,10,True
+H04,2,Customer Rescheduled,39,False
+H04,2,Customer Unreachable,77,False
+H04,2,Late Dispatch,20,True
+H04,2,Not Attempted,10,True
+H05,1,Address Incomplete,18,False
+H05,1,Agent Time Shortage,16,True
+H05,1,Customer Rescheduled,31,False
+H05,1,Customer Unreachable,72,False
+H05,1,Late Dispatch,18,True
+H05,1,Not Attempted,16,True
+H05,2,Address Incomplete,26,False
+H05,2,Agent Time Shortage,16,True
+H05,2,Customer Rescheduled,43,False
+H05,2,Customer Unreachable,68,False
+H05,2,Late Dispatch,17,True
+H05,2,Not Attempted,16,True
+H06,1,Address Incomplete,17,False
+H06,1,Agent Time Shortage,6,True
+H06,1,Customer Rescheduled,34,False
+H06,1,Customer Unreachable,49,False
+H06,1,Late Dispatch,11,True
+H06,1,Not Attempted,7,True
+H06,2,Address Incomplete,22,False
+H06,2,Agent Time Shortage,13,True
+H06,2,Customer Rescheduled,28,False
+H06,2,Customer Unreachable,66,False
+H06,2,Late Dispatch,10,True
+H06,2,Not Attempted,7,True

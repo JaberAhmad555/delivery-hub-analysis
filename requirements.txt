@@ -1,4 +1,6 @@
 pandas==2.3.3
+numpy==2.5.4
 requests==2.34.2
 pytest==9.2.0
-# Streamlit and Plotly will be added in Phase 2.
+streamlit==1.66.1
+plotly==7.1.0

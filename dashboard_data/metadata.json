@@ -1,0 +1,83 @@
+{
+  "generated_at_utc": "2026-10-30T22:01:46.475540+00:00",
+  "historical_period": "13-26 October 2026",
+  "forecast_period": "27 October-23 November 2026",
+  "recommended": {
+    "name": "Recommended - robust 28-day budget",
+    "hires": [
+      0,
+      0,
+      0,
+      2,
+      0,
+      0
+    ],
+    "transfers": [
+      [
+        "H02",
+        "H01",
+        2
+      ]
+    ],
+    "programmes": [
+      "H03"
+    ]
+  },
+  "phase1_validated": true,
+  "phase1_unchanged": true,
+  "privacy": "Hub aggregates and anonymised agent summaries only. No raw order/log records, real agent names or raw IDs.",
+  "files": {
+    "hubs.csv": {
+      "rows": 6,
+      "sha256": "d035a1cc2fe738e31ab66596297a2a8a98cbbc1c3868b2d96b02926a81f94708"
+    },
+    "historical_hub_week.csv": {
+      "rows": 12,
+      "sha256": "adc7c72a577d85aa40d44f8ea23daf07f34de5cea9dabfe48d82cd6d1965297a"
+    },
+    "daily_hub.csv": {
+      "rows": 84,
+      "sha256": "26c1929e3c44596e2ed685fbaf71b720e9f6952be6b41a6d698c52f2bc2fa088"
+    },
+    "hold_reasons.csv": {
+      "rows": 72,
+      "sha256": "a97203360490f2d8b740728ade6ad64146099900d097bead14c52efaa770890a"
+    },
+    "agent_productivity.csv": {
+      "rows": 126,
+      "sha256": "d3800f03a77c6e64e4304dfec07cc4d60910941ae71cb18a5fd0d72cca9dee4e"
+    },
+    "high_return_agents.csv": {
+      "rows": 3,
+      "sha256": "2473b15cffc6913d8f63f5303c58f90308d305d6cd00b19fd9b217643b4bac49"
+    },
+    "held_orders.csv": {
+      "rows": 6,
+      "sha256": "e24d972631b8e6b8abc188c43a315ca1cc0129e383419cbdf398d5acc4935e36"
+    },
+    "forecast.csv": {
+      "rows": 24,
+      "sha256": "659f885177ac8c6b095bbd13d79eed38887568dfdbe207e0cf3f1ccf72508e06"
+    },
+    "scenario_comparison.csv": {
+      "rows": 12,
+      "sha256": "cb08be99a3f444435ae23081183012c93e6381b4ea74ac1419781d8f61e29256"
+    },
+    "weekly_staffing_plan.csv": {
+      "rows": 288,
+      "sha256": "83801c965cde4db131cdccb5c09b28edc7c51d44f1034776e304f9c246d969a2"
+    },
+    "budget_allocation.csv": {
+      "rows": 5,
+      "sha256": "afa618c5e16a7fe103d0ab659596bfa25e97b6568b93f3bcc49937551995fdee"
+    },
+    "risk_register.csv": {
+      "rows": 7,
+      "sha256": "770f86908720ea1b353f66e5abf6299a1515d7125c079509180db5763d93f0a9"
+    },
+    "sensitivity_analysis.csv": {
+      "rows": 11,
+      "sha256": "c36a4efc33b1a760d9903c38298651a34f1e3955b0e0891e86239aa74903096a"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+hub_id,hub_name,agent,attempts,returned_attempts,return_ratio
+H05,Brookside,Agent 45,349,94,0.2693409742120344
+H05,Brookside,Agent 46,414,91,0.2198067632850241
+H05,Brookside,Agent 47,413,72,0.1743341404358353

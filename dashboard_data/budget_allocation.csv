@@ -1,0 +1,6 @@
+item,hub_id,quantity,unit_cost_bdt,amount_bdt,category,timing
+Transfer Lakeview to Greenfield,H01,2,2000,4000,One-time,Day 1
+Recruit fixed agents: Hillcrest,H04,2,5000,10000,One-time,Day 1
+Fixed pay: Hillcrest (28 days),H04,2,18200,36400,New-agent payroll,Days 1-28
+Hold programme: Riverside,H03,1,15000,15000,One-time,Day 1; effect after Day 14
+Unallocated contingency,All,1,4600,4600,Remaining budget,Not spent

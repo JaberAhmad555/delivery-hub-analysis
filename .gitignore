@@ -18,3 +18,7 @@ outputs/*
 !outputs/.gitkeep
 work/
 .vscode/
+
+# Deployment secrets and generated share archives
+.streamlit/secrets.toml
+*.zip

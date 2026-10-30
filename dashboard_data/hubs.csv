@@ -1,0 +1,7 @@
+hub_id,hub_name,cluster
+H01,Greenfield,Cluster A
+H02,Lakeview,Cluster A
+H03,Riverside,Cluster B
+H04,Hillcrest,Cluster B
+H05,Brookside,Cluster C
+H06,Westwood,Cluster C
