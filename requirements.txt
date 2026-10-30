@@ -1,0 +1,4 @@
+pandas==2.3.3
+requests==2.34.2
+pytest==9.2.0
+# Streamlit and Plotly will be added in Phase 2.
