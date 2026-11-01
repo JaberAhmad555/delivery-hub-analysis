@@ -1,188 +1,41 @@
-# CarryBee operations analysis - assessment review
+# Delivery Hub Analysis
 
-Reproducible Python 3.13 / SQLite implementation of Q1-Q7 from the supplied
-Data Analyst Technical Assessment. It downloads eight CSVs, validates and imports
-them, executes seven standalone SQL files, independently compares their results
-with pandas/Python, and exports nine CSVs plus consolidated report-ready tables.
+An analysis of courier operations across six delivery hubs using SQL, Python, and Streamlit.
 
-Phase 1 remains intact. Phase 2 adds reproducible Q8-Q10 strategy and a three-section Streamlit/Plotly dashboard. An eight-slide management presentation and a regenerable assessment PDF are complete for review. The PDF remains DRAFT - NOT FOR SUBMISSION pending a verified public dashboard URL.
+## Overview
 
-## Phase 2 quick start
+The project examines agent productivity, hub utilisation, delivery holds, returns, operating costs, and four-week staffing requirements.
 
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m streamlit run app.py
-```
+It also compares hiring, internal transfers, and operational improvement scenarios under a fixed budget.
 
-The committed `dashboard_data/` snapshot supports cloud startup without raw CSVs or SQLite. Agent summaries are anonymised. See [PHASE2_HANDOFF.md](PHASE2_HANDOFF.md) for the recommended BDT 65,400 plan, four-week performance, ROI and sensitivities; [DEPLOYMENT.md](DEPLOYMENT.md) for cloud setup and actual browser screenshot commands.
+## Tools
 
-To reproduce Phase 2 locally with the original data:
+- Python and pandas
+- SQLite
+- Streamlit and Plotly
+- pytest
 
-```powershell
-.\.venv\Scripts\python.exe -m src.scenario_analysis
-.\.venv\Scripts\python.exe -m src.prepare_dashboard_data
-.\.venv\Scripts\python.exe -m pytest -q --junitxml=outputs\phase2-pytest-results.xml
-```
+## Dashboard
 
-The full suite passes 79 tests. The original 49 Phase 1 tests are retained; source SQL and nine Phase 1 result CSVs have unchanged hashes. New modules are `scenario_analysis.py`, `prepare_dashboard_data.py` and `dashboard_data.py`; browser and packaging scripts are under `scripts/`. Strategic outputs are in `outputs/strategic/`, real screenshots in `outputs/screenshots/`, and shareable ZIPs in `outputs/review/`.
+Install dependencies:
 
-The following sections retain the Phase 1 setup and reference definitions.
+    python -m pip install -r requirements.txt
 
-## Windows setup and run
+Run the dashboard:
 
-Run these commands in PowerShell. Activation is unnecessary, so PowerShell's
-script-execution policy does not need to change.
+    python -m streamlit run app.py
 
-```powershell
-Set-Location 'C:\Users\User\OneDrive\Desktop\CarryBee-Analytics'
-py -3.13 --version
-py -3.13 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m src.download_data
-.\.venv\Scripts\python.exe -m src.analysis
-.\.venv\Scripts\python.exe -m pytest -q --junitxml=outputs\pytest-results.xml
-```
+The dashboard reads from the aggregated dashboard_data folder and does not require the original order-level files or SQLite database.
 
-The existing project environment has already been created and run. For later
-reruns use the final three commands. Python 3.13.5 is the verified interpreter.
-SQLite ships with Python; no server or separate SQLite installation is needed.
+## Project Structure
 
-To save console evidence in PowerShell:
+- app.py - Interactive dashboard
+- dashboard_data/ - Aggregated dashboard data
+- sql/ - SQL analysis queries
+- src/ - Data processing and analysis
+- tests/ - Automated tests
+- ASSUMPTIONS.md - Analysis assumptions
 
-```powershell
-.\.venv\Scripts\python.exe -m src.analysis 2>&1 | Tee-Object -FilePath outputs\analysis-output.txt
-if ($LASTEXITCODE -ne 0) { throw 'Analysis failed' }
-.\.venv\Scripts\python.exe -m pytest -q --junitxml=outputs\pytest-results.xml 2>&1 | Tee-Object -FilePath outputs\pytest-output.txt
-if ($LASTEXITCODE -ne 0) { throw 'Tests failed' }
-```
+## Notes
 
-Useful separate commands:
-
-```powershell
-# Validate and rebuild the database without executing assessment queries:
-.\.venv\Scripts\python.exe -m src.load_data
-# Run queries against the existing database; still compare with original CSVs:
-.\.venv\Scripts\python.exe -m src.analysis --reuse-db
-# Download fresh copies; never replace an existing CSV with an HTML error page:
-.\.venv\Scripts\python.exe -m src.download_data --force
-# Edge-case tests without employer-supplied CSVs:
-.\.venv\Scripts\python.exe -m pytest -q -m 'not integration'
-```
-
-Use `--raw-dir`, `--db`, and `--output-dir` on `src.analysis` to override paths.
-Paths default relative to the repository, not the shell's current directory.
-The supplied assessment is a fixed snapshot; changed source policies or
-reference totals fail validation and require investigation.
-
-## Project layout
-
-```text
-CarryBee-Analytics/
-|-- app.py                         # Streamlit operations dashboard
-|-- data/
-|   |-- raw/                       # Eight CSVs and source_manifest.json, ignored
-|   `-- processed/carrybee.sqlite3  # Generated, ignored
-|-- sql/
-|   |-- 00_schema.sql
-|   |-- q1_productivity.sql
-|   |-- q2_utilisation.sql
-|   |-- q3_hold_reasons.sql
-|   |-- q4_held_orders.sql
-|   |-- q5_high_return_agents.sql
-|   |-- q6_delivery_costs.sql
-|   `-- q7_staffing_forecast.sql
-|-- src/
-|   |-- __init__.py
-|   |-- config.py
-|   |-- download_data.py
-|   |-- load_data.py
-|   |-- analysis.py
-|   |-- validation.py
-|   `-- export_results.py
-|-- tests/                         # SQL edge cases, download tests, source audits
-|-- outputs/                       # CSVs, results.md, manifests and test evidence
-|-- requirements.txt
-|-- pytest.ini
-|-- ASSUMPTIONS.md
-|-- REVIEW_HANDOFF.md
-|-- README.md
-|-- .gitattributes
-`-- .gitignore
-```
-
-`config.py` is the small addition to the requested structure for shared source
-IDs, headers and paths. SQL files rely only on the eight source tables, with no
-custom Python SQL functions or precomputed result tables. Open the generated
-database in a SQLite client and run any Q file directly. Q1 has two independent
-SELECT statements: the complete agent-day table, then the hub summary. The
-runner recognizes `-- result:` labels to export each result separately; the
-labels are ordinary SQL comments.
-
-## Outputs and definitions
-
-| File | Contents |
-| --- | --- |
-| `q1_agent_day.csv` | All 882 eligible agent-days, including 28 zero-activity days |
-| `q1_first20.csv` | First 20 rows in day/hub/agent order |
-| `q1_hub_summary.csv` | All six hub productivity summaries |
-| `q2_utilisation.csv` | Attempts, eligible agents, agent-days, capacity, utilisation and flags |
-| `q3_hold_reasons.csv` | Week 2 holds, agent-side share and deterministic top two reasons |
-| `q4_held_orders.csv` | Distinct ever-held orders and final-status proportions |
-| `q5_high_return_agents.csv` | Three qualifying agents with denominators and tenure |
-| `q6_delivery_costs.csv` | Twelve hub/week payroll and cost decompositions, BDT |
-| `q7_staffing_forecast.csv` | Twenty-four projected hub/weeks, multiplier and staffing gaps |
-| `results.md` | Consolidated report-ready tables, including Q1 first 20 and full hub summary |
-| `validation.json` | Source audit, independent result comparisons and reference checks |
-| `run_manifest.json` | Source URLs/hashes, SQL hashes and runtime versions |
-| `pytest-output.txt`, `pytest-results.xml` | Saved console and machine-readable test evidence |
-
-Ratios are fractions (0.85 = 85%). CSV blank cells represent unavailable results.
-All historical costs include paid zero-activity eligible days. Forecast attempts
-use each hub's Week 2 Assigned events / Week 2 newly created orders; they are
-then divided by 238 attempts per agent-week and rounded up. Current workforce
-remains fixed, with seven available days each week. Details, including boundary
-censoring, are in [ASSUMPTIONS.md](ASSUMPTIONS.md).
-
-## Source downloads and manual recovery
-
-The downloader uses the requested Google Drive URL, bounded downloads, request
-timeouts and retries for transient errors. It checks UTF-8 decoding, content
-type, HTML signatures, exact headers, row widths and nonempty contents before
-replacing files. The loader then checks semantic validity. No mock dataset or
-HTML response can be used as assessment data.
-
-If Google Drive requires login, denies access or returns a confirmation page,
-open the corresponding link below in a browser. Download the actual CSV and
-save it under `data\raw\` with the exact filename. Rerun the downloader without
-`--force` to validate local files, then run the analysis. Do not use Save Page.
-
-| File | Supplied source |
-| --- | --- |
-| hubs.csv | [Download](https://drive.google.com/uc?export=download&id=1nMXHUYxfNfOu7Evpcw1I05G8KtWzfozd) |
-| agents.csv | [Download](https://drive.google.com/uc?export=download&id=1G3gVf87OD1UY7pMBSl9jkpXRXbnJiLaH) |
-| orders.csv | [Download](https://drive.google.com/uc?export=download&id=1dXDPB_C5iYB75ghr3POorOw8jWKpHWjH) |
-| order_logs.csv | [Download](https://drive.google.com/uc?export=download&id=1OjRD49U9aF_2WnN5LO-iptAFYg8sGOch) |
-| agent_salary.csv | [Download](https://drive.google.com/uc?export=download&id=1mszp5gdvWmk04wh-VQri-krBOot99n1u) |
-| costs.csv | [Download](https://drive.google.com/uc?export=download&id=1OLCIykkUxkzsZUOKC5Y6aFaKHv0-eqzc) |
-| rules.csv | [Download](https://drive.google.com/uc?export=download&id=1fDg113qN_IlMPzNhoPY9AzF8KBz_jD1Y) |
-| volume_forecast.csv | [Download](https://drive.google.com/uc?export=download&id=1Im-j7UJa5YbcqoB9_iUed-dooipSSNUp) |
-
-## Verification
-
-The Phase 1 milestone passed **49 tests, 0 failures, 0 skips**; the complete assessment suite passes **86 tests**. Tests cover
-join uniqueness and foreign keys, attempt/outcome matching and attribution,
-period boundaries, joining/departure eligibility, hold classification and ties,
-distinct held-order cohorts, strict tenure/return/utilisation thresholds,
-zero denominators, paid zero-activity staff, financial totals, forecast
-multipliers/ceilings, safe failed downloads and preservation of a previous
-database after a failed rebuild. Integration tests compare all eight SQL result
-sets with independent original-data calculations and all supplied references.
-
-Without original data, integration tests explicitly skip; an edge-case-only run
-does not establish assessment validation. Expected values live only in validation
-assertions/tests, never SQL outputs. See [REVIEW_HANDOFF.md](REVIEW_HANDOFF.md)
-for numerical findings and review priorities.
-
-## Local Git and manual deployment
-
-No remote publication or account troubleshooting is required for local work. The owner will publish through GitHub Desktop. See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for manual Streamlit deployment and [TECHNICAL_HANDOFF.md](TECHNICAL_HANDOFF.md) for final artifacts and reproducible verification. Do not publish the private review ZIP or raw source data.
+The repository is based on a courier operations assessment case study. Financial projections depend on the documented staffing and operational assumptions.
