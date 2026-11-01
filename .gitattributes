@@ -4,3 +4,4 @@
 *.md text eol=lf
 *.txt text eol=lf
 *.ini text eol=lf
+dashboard_data/*.csv -text
